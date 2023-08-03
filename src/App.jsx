@@ -1,24 +1,38 @@
+import "../server";
+
 import NotFound from "./pages/NotFound";
+import Layout from "./components/Layout";
+
 import HomePage from "./pages/HomePage";
 import About from "./pages/About";
+import VanPage from "./pages/van/VanPage";
+import VanDetailsPage from "./pages/van/VanDetailsPage";
 
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Dashboard from "./pages/host/Dashboard";
+import Income from "./pages/host/Income";
+import Reviews from "./pages/host/Reviews";
+import HostLayout from "./pages/host/HostLayout";
+
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const App = () => {
   return (
     <Router>
-      <nav className="sm:max-w-sm mx-auto flex gap-2 bg-slate-800 text-white">
-        <Link className="px-2 py-1 hover:bg-slate-900" to={"/"}>
-          Home
-        </Link>
-        <Link className="px-2 py-1 hover:bg-slate-900" to={"/about"}>
-          About
-        </Link>
-      </nav>
       <Routes>
-        <Route path="/" exact element={<HomePage />} />
-        <Route path="/about" element={<About />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="/" element={<Layout />}>
+          <Route index exact element={<HomePage />} />
+          <Route path="about" element={<About />} />
+          <Route path="van" element={<VanPage />} />
+          <Route path="van/:id" element={<VanDetailsPage />} />
+
+          <Route path="host" element={<HostLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="income" element={<Income />} />
+            <Route path="reviews" element={<Reviews />} />
+          </Route>
+
+          <Route path="*" element={<NotFound />} />
+        </Route>
       </Routes>
     </Router>
   );
